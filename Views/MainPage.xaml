@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SystemKolekcjonerstwa.Views.MainPage"
+             Title="System Zarządzana Kolekcjonerstwem">
+
+    <Grid RowDefinitions="100,*,*">
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,*,*"
+              Margin="20">
+            <Picker ItemsSource="{Binding typeList}"
+                    Title="Wybierz Kolekcje"
+                    HorizontalOptions="CenterAndExpand"
+                    Grid.Column="0"
+                    SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+            <Editor Placeholder="Dodaj nową kolekcję" Grid.Column="1" x:Name="newTypeEditor" />
+            <Button Text="Dodaj" Grid.Column="2" Clicked="Button_NewType">
+                <Button.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="BackgroundColor" Value="LightGray" />
+                    </Trigger>
+                </Button.Triggers>
+            </Button>
+        </Grid>
+
+        <ScrollView 
+                    Grid.Row="1">
+            <ListView ItemsSource="{Binding selectedCollectionType}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid ColumnDefinitions="*,*,*,*,*,*" Margin="20">
+                                <Label Text="{Binding CollectionType}" Grid.Column="0"/>
+                                <Label Text="{Binding Name}" Grid.Column="1"/>
+                                <Label Text="{Binding Description}" Grid.Column="2"/>
+                                <Label Text="{Binding Count}" Grid.Column="3"/>
+
+                                <Button Text="Usuń"
+                                        Clicked="Button_Delete"
+                                        Grid.Column="4" BackgroundColor="#B22A38">
+                                    <Button.Triggers>
+                                        <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                                            <Setter Property="BackgroundColor" Value="LightGray" />
+                                        </Trigger>
+                                    </Button.Triggers>
+                                </Button>
+                                
+                                
+                                <Button Text="Edytuj" Clicked="Button_Edit" Grid.Column="5">
+                                    <Button.Triggers>
+                                        <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                                            <Setter Property="BackgroundColor" Value="LightGray" />
+                                        </Trigger>
+                                    </Button.Triggers>
+                                </Button>
+                                
+                                   
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+
+        <Grid RowDefinitions="*,*,*" IsVisible="false" x:Name="gridSelectedCollectionEdit" Grid.Row="2">
+            <Label Text="" x:Name="wybranaKolekcja" Grid.Row="0"/>
+
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="*,*,*,*">
+                <Editor Placeholder="Nazwa:" x:Name="editName" Grid.Column="0"/>
+                <Editor Placeholder="Opis:" x:Name="editDescription" Grid.Column="1"/>
+                <Editor Placeholder="Sztuk:" x:Name="editCount" Grid.Column="2"/>
+                <Button Text="Zatwierdź zmiany" Grid.Column="3" Clicked="Button_Add">
+                    <Button.Triggers>
+                        <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                            <Setter Property="BackgroundColor" Value="LightGray" />
+                        </Trigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+
+        </Grid>
+
+
+    </Grid>
+</ContentPage>
